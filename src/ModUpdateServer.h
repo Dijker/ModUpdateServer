@@ -3,9 +3,10 @@
 **  Program  : MonUpdateServer.h
 ** 
 **  This is the ESP8266HTTPUpdateServer.h file 
-**  modified by PA4WD ("https://github.com/PA4WD/Arduino/tree/master/libraries/ESP8266HTTPUpdateServer")
+**  Created and modified by Ivan Grokhotkov, Miguel Angel Ajo, Earle Philhower and many others 
+**  see: https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266HTTPUpdateServer
 **
-**  and then modified by Willem Aandewiel
+**  ... and then modified by Willem Aandewiel
 **
 ** License and credits
 ** Arduino IDE is developed and maintained by the Arduino team. The IDE is licensed under GPL.

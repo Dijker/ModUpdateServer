@@ -3,9 +3,10 @@
 **  Program  : MonUpdateServer-impl.h
 ** 
 **  This is the ESP8266HTTPUpdateServer.h file 
-**  modified by PA4WD ("https://github.com/PA4WD/Arduino/tree/master/libraries/ESP8266HTTPUpdateServer")
+**  Created and modified by Ivan Grokhotkov, Miguel Angel Ajo, Earle Philhower and many others 
+**  see: https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266HTTPUpdateServer
 **
-**  and then modified by Willem Aandewiel
+**  ... and then modified by Willem Aandewiel
 **
 ** License and credits
 ** Arduino IDE is developed and maintained by the Arduino team. The IDE is licensed under GPL.
@@ -38,8 +39,9 @@ namespace esp8266httpupdateserver {
 using namespace esp8266webserver;
 
 static const char serverIndex[] PROGMEM =
-  R"(<html charset="UTF-8"><style type='text/css'>
-     body {background-color: lightblue;}
+  R"(<html charset="UTF-8">
+     <style type='text/css'>
+        body {background-color: lightblue;}
      </style>
      <body>
      <h1>DSMR-logger Flash utility</h1>
@@ -52,7 +54,7 @@ static const char serverIndex[] PROGMEM =
       <form method='POST' action='?cmd=100' enctype='multipart/form-data'> 
         Selecteer een "<b>.spiffs.bin</b>" bestand<br/>
         <input type='hidden' name='cmd' value='100'>
-                  <input type='file' accept='ino.bin' name='update'>
+                  <input type='file' accept='spiffs.bin' name='update'>
                   <input type='submit' value='Flash Spiffs'>
       </form>
       <br/>Wacht nog <span style='font-size: 1.3em;' id="waitSeconds">120</span> seconden ..
@@ -73,7 +75,7 @@ static const char serverIndex[] PROGMEM =
      </html>)";
 
 static const char successResponse[] PROGMEM = 
-  "<META http-equiv=\"refresh\" content=\"15;URL=/\">Update Success! Rebooting...";
+  "<META http-equiv=\"refresh\" content=\"35;URL=/\">Update <b>Success</b>!<br>Wait for DSMR-logger to reboot...";
 
 template <typename ServerType>
 ESP8266HTTPUpdateServerTemplate<ServerType>::ESP8266HTTPUpdateServerTemplate(bool serial_debug)
@@ -108,8 +110,8 @@ void ESP8266HTTPUpdateServerTemplate<ServerType>::setup(ESP8266WebServerTemplate
       } else {
         _server->client().setNoDelay(true);
         _server->send_P(200, PSTR("text/html"), successResponse);
-        delay(1000);
         _server->client().stop();
+        delay(1000);
         ESP.restart();
         delay(3000);
       }
