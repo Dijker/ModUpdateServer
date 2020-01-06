@@ -20,13 +20,13 @@ to be defined and can be tailered to your needs.
      <body>
      <h1>ESP8266 Flash utility</h1>
      <form method='POST' action='?cmd=0' enctype='multipart/form-data'>
-        <input type='hidden' name='cmd' value='0'>
-                  <input type='file' accept='ino.bin' name='update'>
-                  <input type='submit' value='Flash Firmware'>
+        <br/>Select firmware to flash<br/>
+            <input type='file' accept='ino.bin' name='firmware'>
+            <input type='submit' value='Flash Firmware'>
       </form>
       <form method='POST' action='?cmd=100' enctype='multipart/form-data'> 
-        <input type='hidden' name='cmd' value='100'>
-                  <input type='file' accept='spiffs.bin' name='update'>
+        <br/>Select spiffs to flash<br/>
+                  <input type='file' accept='spiffs.bin' name='filesystem'>
                   <input type='submit' value='Flash Spiffs'>
       </form>
      </html>)";
