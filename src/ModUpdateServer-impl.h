@@ -37,45 +37,26 @@
 
 namespace esp8266httpupdateserver {
 using namespace esp8266webserver;
-
-static const char serverIndex[] PROGMEM =
+/**
+static const char serverIndex2[] PROGMEM =
   R"(<html charset="UTF-8">
-     <style type='text/css'>
-        body {background-color: lightblue;}
-     </style>
      <body>
-     <h1>DSMR-logger Flash utility</h1>
+     <h1>ESP8266 Flash utility</h1>
      <form method='POST' action='?cmd=0' enctype='multipart/form-data'>
-        Selecteer een "<b>.ino.bin</b>" bestand<br/>
         <input type='hidden' name='cmd' value='0'>
                   <input type='file' accept='ino.bin' name='update'>
                   <input type='submit' value='Flash Firmware'>
       </form>
       <form method='POST' action='?cmd=100' enctype='multipart/form-data'> 
-        Selecteer een "<b>.spiffs.bin</b>" bestand<br/>
         <input type='hidden' name='cmd' value='100'>
                   <input type='file' accept='spiffs.bin' name='update'>
                   <input type='submit' value='Flash Spiffs'>
       </form>
-      <br/>Wacht nog <span style='font-size: 1.3em;' id="waitSeconds">120</span> seconden ..
-      <br>Als het lijkt of er niets gebeurd, wacht dan tot de teller
-           op 'nul' staat en klik daarna <span style='font-size:1.3em;'><b><a href="/">hier</a></b></span>!
-     </body>
-     <script>
-         var seconds = document.getElementById("waitSeconds").textContent;
-         var countdown = setInterval(function() {
-           seconds--;
-           document.getElementById('waitSeconds').textContent = seconds;
-           if (seconds <= 0) {
-              clearInterval(countdown);
-              window.location.assign("/")
-           }
-         }, 1000);
-     </script>
      </html>)";
 
 static const char successResponse[] PROGMEM = 
-  "<META http-equiv=\"refresh\" content=\"35;URL=/\">Update <b>Success</b>!<br>Wait for DSMR-logger to reboot...";
+  "<META http-equiv=\"refresh\" content=\"15;URL=/\">Update <b>Success</b>!<br>Wait for DSMR-logger to reboot...";
+**/
 
 template <typename ServerType>
 ESP8266HTTPUpdateServerTemplate<ServerType>::ESP8266HTTPUpdateServerTemplate(bool serial_debug)
@@ -98,7 +79,7 @@ void ESP8266HTTPUpdateServerTemplate<ServerType>::setup(ESP8266WebServerTemplate
     _server->on(path.c_str(), HTTP_GET, [&](){
       if(_username != emptyString && _password != emptyString && !_server->authenticate(_username.c_str(), _password.c_str()))
         return _server->requestAuthentication();
-      _server->send_P(200, PSTR("text/html"), serverIndex);
+      _server->send_P(200, PSTR("text/html"), _serverIndex);
     });
 
     // handler for the /update form POST (once file upload finishes)
@@ -109,7 +90,7 @@ void ESP8266HTTPUpdateServerTemplate<ServerType>::setup(ESP8266WebServerTemplate
         _server->send(200, F("text/html"), String(F("Update error: ")) + _updaterError);
       } else {
         _server->client().setNoDelay(true);
-        _server->send_P(200, PSTR("text/html"), successResponse);
+        _server->send_P(200, PSTR("text/html"), _serverSuccess);
         _server->client().stop();
         delay(1000);
         ESP.restart();
@@ -165,6 +146,18 @@ void ESP8266HTTPUpdateServerTemplate<ServerType>::setup(ESP8266WebServerTemplate
       }
       delay(0);
     });
+}
+
+template <typename ServerType>
+void ESP8266HTTPUpdateServerTemplate<ServerType>::setIndexPage(const char *indexPage)
+{
+	_serverIndex = indexPage;
+}
+
+template <typename ServerType>
+void ESP8266HTTPUpdateServerTemplate<ServerType>::setSuccessPage(const char *successPage)
+{
+	_serverSuccess = successPage;
 }
 
 template <typename ServerType>

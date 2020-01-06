@@ -52,6 +52,9 @@ class ESP8266HTTPUpdateServerTemplate
       _username = username;
       _password = password;
     }
+    
+    void setIndexPage(const char *indexPage);
+    void setSuccessPage(const char *succesPage);
 
   protected:
     void _setUpdaterError();
@@ -63,6 +66,8 @@ class ESP8266HTTPUpdateServerTemplate
     String _password;
     bool _authenticated;
     String _updaterError;
+    const char *_serverIndex;
+    const char *_serverSuccess;
 };
 
 };
