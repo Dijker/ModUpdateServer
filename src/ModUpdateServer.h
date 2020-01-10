@@ -1,6 +1,6 @@
 /*
 ***************************************************************************  
-**  Program  : MonUpdateServer.h
+**  Program  : ModUpdateServer.h
 ** 
 **  This is the ESP8266HTTPUpdateServer.h file 
 **  Created and modified by Ivan Grokhotkov, Miguel Angel Ajo, Earle Philhower and many others 
