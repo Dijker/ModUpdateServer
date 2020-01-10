@@ -1,6 +1,6 @@
 /*
 ***************************************************************************  
-**  Program  : MonUpdateServer-impl.h
+**  Program  : ModUpdateServer-impl.h
 ** 
 **  This is the ESP8266HTTPUpdateServer.h file 
 **  Created and modified by Ivan Grokhotkov, Miguel Angel Ajo, Earle Philhower and many others 
@@ -37,7 +37,7 @@
 
 namespace esp8266httpupdateserver {
 using namespace esp8266webserver;
-/**
+/** >>>> this must be placed somewhere in your main code <<<<
 static const char serverIndex2[] PROGMEM =
   R"(<html charset="UTF-8">
      <body>
